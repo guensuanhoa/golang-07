@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"os"
 
+	"example.com/g07-food-delivery/component/appctx"
+
 	restaurantgin "example.com/g07-food-delivery/modules/restaurant/transport/gin"
+	ginupload "example.com/g07-food-delivery/modules/upload/transport/gin"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -55,6 +58,8 @@ func main() {
 	// 	log.Println(err)
 	// }
 
+	appCtx := appctx.NewAppContext(db)
+
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -64,6 +69,9 @@ func main() {
 
 	v1 := r.Group("/v1")
 	{
+		// Upload image
+		v1.POST("/upload", ginupload.UploadImage(appCtx))
+
 		// Create restaurant
 		restaurants := v1.Group("/restaurants")
 		{

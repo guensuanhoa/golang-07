@@ -8,9 +8,11 @@ import (
 
 type RestaurantUpdate struct {
 	common.SQLModel
-	Name    *string `json:"name" gorm:"column:name;"`
-	Address *string `json:"address" gorm:"column:addr;"`
-	Status  *int    `json:"-" gorm:"column:status;"` // json:"-" => security
+	Name    *string        `json:"name" gorm:"column:name;"`
+	Address *string        `json:"address" gorm:"column:addr;"`
+	Status  *int           `json:"-" gorm:"column:status;"`  // json:"-" => security
+	Logo    *common.Image  `json:"logo" gorm:"column:logo;"` // Dung con tro vi muon neu khong co logo thi co the truyen null
+	Cover   *common.Images `json:"cover" gorm:"column:cover;"`
 }
 
 /// Override func TabbleName cua gorm, de khi goi db.Updates no hieu la update vao table "restaurants"
